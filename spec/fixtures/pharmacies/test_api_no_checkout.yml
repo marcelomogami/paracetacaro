@@ -1,0 +1,16 @@
+name: Test No Checkout
+slug: test_api_no_checkout
+enabled: true
+mode: api
+checkout: false
+
+search:
+  url: "https://example.com/api/no_checkout/{query}"
+
+fields:
+  results: ""
+  nome: "productName"
+  preco: "items[0].price"
+  url: "link"
+  imagem: "items[0].imageUrl"
+  sku_id: "items[0].itemId"

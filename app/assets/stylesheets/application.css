@@ -1,0 +1,38 @@
+/* Carrossel de scroll horizontal — Bootstrap não tem este padrão */
+
+.carousel-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-scroll::-webkit-scrollbar { height: 6px; }
+.carousel-scroll::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 3px; }
+.carousel-scroll::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+/* Card de produto dentro do carrossel */
+
+.product-card {
+  flex: 0 0 180px;
+  scroll-snap-align: start;
+}
+
+.product-card .card-img-top {
+  height: 120px;
+  object-fit: contain;
+  background: #fff;
+}
+
+.product-name {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.preco { color: #1a7f37; }

@@ -1,0 +1,21 @@
+name: Test HTML NoJS
+slug: test_html_nojs
+enabled: true
+mode: html
+
+search:
+  url: "https://example.com/search?q={query}"
+  needs_js: false
+
+selectors:
+  results: ".product"
+  nome: ".name"
+  preco:
+    selector: ".price"
+    transform: strip_currency
+  url:
+    selector: "a"
+    attribute: href
+  imagem:
+    selector: "img"
+    attribute: src

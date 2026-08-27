@@ -1,0 +1,27 @@
+<% content_for :title, "Entrar — Paracetacaro" %>
+
+<div class="row justify-content-center mt-5">
+  <div class="col-sm-8 col-md-5 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h4 class="card-title text-center mb-4">Entrar</h4>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="mb-3">
+            <%= f.label :email, "E-mail", class: "form-label" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :password, "Senha", class: "form-label" %>
+            <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+          </div>
+          <%= f.submit "Entrar", class: "btn btn-primary w-100" %>
+        <% end %>
+
+        <div class="text-center mt-3">
+          <%= link_to "Esqueci minha senha", new_user_password_path, class: "text-muted small" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

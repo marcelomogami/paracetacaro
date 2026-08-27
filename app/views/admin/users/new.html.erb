@@ -1,0 +1,32 @@
+<% content_for :title, "Cadastrar usuário — Paracetacaro" %>
+
+<div class="row justify-content-center mt-5">
+  <div class="col-sm-8 col-md-5 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h4 class="card-title text-center mb-4">Cadastrar usuário</h4>
+
+        <%= form_with model: @user, url: cadastro_path do |f| %>
+          <%= render "devise/shared/error_messages", resource: @user %>
+          <div class="mb-3">
+            <%= f.label :name, "Nome", class: "form-label" %>
+            <%= f.text_field :name, autofocus: true, class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :email, "E-mail", class: "form-label" %>
+            <%= f.email_field :email, class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :password, "Senha", class: "form-label" %>
+            <%= f.password_field :password, class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :password_confirmation, "Confirmar senha", class: "form-label" %>
+            <%= f.password_field :password_confirmation, class: "form-control" %>
+          </div>
+          <%= f.submit "Cadastrar", class: "btn btn-primary w-100" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

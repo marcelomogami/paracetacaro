@@ -1,0 +1,24 @@
+<% content_for :title, "Recuperar senha — Paracetacaro" %>
+
+<div class="row justify-content-center mt-5">
+  <div class="col-sm-8 col-md-5 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h4 class="card-title text-center mb-4">Recuperar senha</h4>
+
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+          <div class="mb-3">
+            <%= f.label :email, "E-mail", class: "form-label" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+          </div>
+          <%= f.submit "Enviar instruções", class: "btn btn-primary w-100" %>
+        <% end %>
+
+        <div class="text-center mt-3">
+          <%= link_to "Voltar ao login", new_user_session_path, class: "text-muted small" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

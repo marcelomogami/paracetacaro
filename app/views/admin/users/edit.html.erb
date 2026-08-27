@@ -1,0 +1,31 @@
+<% content_for :title, "Editar usuário — Paracetacaro" %>
+
+<div class="row justify-content-center mt-5">
+  <div class="col-sm-8 col-md-5 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h4 class="card-title text-center mb-4">Editar usuário</h4>
+
+        <%= form_with model: [:admin, @user] do |f| %>
+          <%= render "devise/shared/error_messages", resource: @user %>
+          <div class="mb-3">
+            <%= f.label :name, "Nome", class: "form-label" %>
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :email, "E-mail", class: "form-label" %>
+            <%= f.email_field :email, class: "form-control" %>
+          </div>
+          <div class="mb-3 form-check">
+            <%= f.check_box :beta_tester, class: "form-check-input" %>
+            <%= f.label :beta_tester, "Beta tester", class: "form-check-label" %>
+          </div>
+          <div class="d-flex gap-2">
+            <%= f.submit "Salvar", class: "btn btn-primary flex-grow-1" %>
+            <%= link_to "Cancelar", admin_users_path, class: "btn btn-outline-secondary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

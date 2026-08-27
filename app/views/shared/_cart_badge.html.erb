@@ -1,0 +1,9 @@
+<%= link_to cart_path, class: "btn btn-outline-light btn-sm position-relative" do %>
+  <i class="bi bi-cart3"></i>
+  <% item_count = cart&.cart_items&.count || 0 %>
+  <% if item_count > 0 %>
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem">
+      <%= item_count %>
+    </span>
+  <% end %>
+<% end %>

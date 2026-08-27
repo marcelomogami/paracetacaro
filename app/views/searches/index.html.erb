@@ -1,0 +1,47 @@
+<% if @stream_name %>
+  <%= turbo_stream_from @stream_name %>
+<% end %>
+
+<div class="row justify-content-center mb-4">
+  <div class="col-lg-8">
+    <%= form_with url: root_path, method: :get, data: { turbo: false } do |f| %>
+      <div class="d-flex gap-2 mb-2">
+        <%= f.text_field :q, value: @query, placeholder: "Ex: paracetamol 500mg", autofocus: true, class: "form-control form-control-lg" %>
+        <%= f.submit "Buscar", class: "btn btn-primary btn-lg" %>
+      </div>
+      <div class="d-flex flex-wrap gap-2" data-controller="pharmacy-filter">
+        <% (@all_pharmacies || PharmacyConfig.load_all.select(&:enabled?)).each do |config| %>
+          <% checked = @selected_slugs.nil? || @selected_slugs.include?(config.slug) %>
+          <input type="checkbox" class="btn-check" id="pharmacy_toggle_<%= config.slug %>"
+                 name="pharmacies[]" value="<%= config.slug %>" autocomplete="off"
+                 data-action="change->pharmacy-filter#toggle"
+                 <%= "checked" if checked %>>
+          <label class="btn btn-outline-primary btn-sm rounded-pill" for="pharmacy_toggle_<%= config.slug %>">
+            <%= config.name %>
+          </label>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if @query %>
+  <div class="d-flex flex-column gap-3">
+    <% @pharmacies.each do |config| %>
+      <% if (cached = @cached_results[config.slug]) %>
+        <%= render "pharmacy_results", results: cached, config: config, query: @query %>
+      <% else %>
+        <div id="pharmacy_<%= config.slug %>_results" class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= config.name %></h5>
+            <p class="text-muted mb-0">Buscando...</p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="d-flex justify-content-center gap-2 mt-4">
+    <%= link_to "↑ Voltar ao topo", "#", class: "btn btn-outline-secondary btn-sm" %>
+    <%= link_to "Ver carrinho", cart_path, class: "btn btn-outline-primary btn-sm" %>
+  </div>
+<% end %>
