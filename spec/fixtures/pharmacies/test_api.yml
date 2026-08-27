@@ -1,0 +1,22 @@
+name: Test API
+slug: test_api
+enabled: true
+mode: api
+
+search:
+  url: "https://example.com/api/search/{query}"
+
+fields:
+  results: ""
+  nome: "productName"
+  fabricante: "brand"
+  preco: "items[0].price"
+  preco_original: "items[0].listPrice"
+  url: "link"
+  imagem: "items[0].imageUrl"
+  disponivel: "items[0].sellers[0].commertialOffer.IsAvailable"
+  vendedor_id: "items[0].sellers[0].sellerId"
+  vendedor_nome: "items[0].sellers[0].sellerName"
+  promocao:
+    - "items[0].sellers[0].commertialOffer.Teasers[0].<Name>k__BackingField"
+    - "items[0].sellers[0].commertialOffer.DiscountHighLight[0].<Name>k__BackingField"

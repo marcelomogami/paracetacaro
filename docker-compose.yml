@@ -1,0 +1,15 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      RAILS_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      # Código montado direto do host: hot reload, YAMLs e master.key do repo.
+      # As gems vivem em /usr/local/bundle (fora de /rails), na imagem — o
+      # bind mount não as esconde. storage/ fica em ./storage no host.
+      - .:/rails
+    command: bin/rails server -b 0.0.0.0 -p 3000

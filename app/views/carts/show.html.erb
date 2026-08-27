@@ -1,0 +1,152 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="mb-0">Carrinho</h4>
+  <div class="d-flex gap-2">
+    <%= link_to "← Voltar à busca", root_path, class: "btn btn-outline-secondary btn-sm" %>
+    <% if @cart_items.any? %>
+      <%= button_to "Limpar carrinho", cart_path, method: :delete,
+            class: "btn btn-outline-danger btn-sm",
+            form: { data: { turbo_confirm: "Limpar todos os itens do carrinho?" } } %>
+    <% end %>
+  </div>
+</div>
+
+<% if @cart_items.empty? %>
+  <div class="text-center text-muted py-5">
+    <i class="bi bi-cart3 fs-1"></i>
+    <p class="mt-2">Seu carrinho está vazio.<br>Faça uma busca e adicione produtos.</p>
+    <%= link_to "Ir para a busca", root_path, class: "btn btn-primary mt-2" %>
+  </div>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-bordered" style="table-layout:fixed">
+      <thead class="table-light">
+        <tr>
+          <th style="width:10%">Item</th>
+          <% col_width = 90 / (@pharmacies.size + 1) %>
+          <% @pharmacies.each do |pharmacy| %>
+            <th style="width:<%= col_width %>%"><%= pharmacy.name %></th>
+          <% end %>
+          <th class="table-warning" style="width:<%= col_width %>%">★ Compra ideal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cart_items.each do |item| %>
+          <tr>
+            <td class="fw-bold"><%= item.query %></td>
+            <% @pharmacies.each do |pharmacy| %>
+              <% selection = item.selection_for(pharmacy.slug) %>
+              <td style="height:1px">
+                <% if selection %>
+                  <div class="d-flex flex-column h-100">
+                    <div class="d-flex align-items-center justify-content-center" style="height:80px">
+                      <% if selection.imagem.present? %>
+                        <img src="<%= selection.imagem %>" alt="<%= selection.nome %>" class="img-fluid" style="max-height:80px;object-fit:contain">
+                      <% end %>
+                    </div>
+                    <p class="mb-0 small mt-1" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden"><%= selection.nome %></p>
+                    <% if selection.fabricante.present? %>
+                      <small class="text-muted text-truncate"><%= selection.fabricante %></small>
+                    <% end %>
+                    <div class="mt-auto pt-1">
+                      <% if selection.promocao.present? %>
+                        <span class="badge bg-danger mb-1 text-wrap d-block"><%= selection.promocao %></span>
+                      <% end %>
+                      <div class="fw-bold text-success">
+                        <%= number_to_currency(selection.preco, unit: "R$", separator: ",", delimiter: ".") %>
+                      </div>
+                      <% if selection.preco_original.present? && selection.preco_original > selection.preco %>
+                        <small class="text-muted"><s><%= number_to_currency(selection.preco_original, unit: "R$", separator: ",", delimiter: ".") %></s></small>
+                      <% end %>
+                      <%= link_to "Ver produto", selection.url, target: "_blank", rel: "noopener noreferrer", class: "btn btn-outline-primary btn-sm w-100 mt-2" %>
+                      <%= button_to cart_selection_path(selection), method: :delete,
+                            class: "btn btn-danger btn-sm w-100 mt-1",
+                            form: { data: { turbo_confirm: "Remover este item?" } } do %>
+                        <i class="bi bi-cart3"></i> Remover
+                      <% end %>
+                    </div>
+                  </div>
+                <% else %>
+                  <span class="text-muted">—</span>
+                <% end %>
+              </td>
+            <% end %>
+            <% ideal = item.ideal_selection %>
+            <td class="table-warning" style="height:1px">
+              <% if ideal %>
+                <div class="d-flex flex-column h-100">
+                  <div class="d-flex align-items-center justify-content-center" style="height:80px">
+                    <% if ideal.imagem.present? %>
+                      <img src="<%= ideal.imagem %>" alt="<%= ideal.nome %>" class="img-fluid" style="max-height:80px;object-fit:contain">
+                    <% end %>
+                  </div>
+                  <p class="mb-0 small mt-1" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden"><%= ideal.nome %></p>
+                  <% if ideal.fabricante.present? %>
+                    <small class="text-muted text-truncate"><%= ideal.fabricante %></small>
+                  <% end %>
+                  <div class="mt-auto pt-1">
+                    <% if ideal.promocao.present? %>
+                      <span class="badge bg-danger mb-1 text-wrap d-block"><%= ideal.promocao %></span>
+                    <% end %>
+                    <div class="fw-bold text-success">
+                      <%= number_to_currency(ideal.preco, unit: "R$", separator: ",", delimiter: ".") %>
+                    </div>
+                    <% if ideal.preco_original.present? && ideal.preco_original > ideal.preco %>
+                      <small class="text-muted"><s><%= number_to_currency(ideal.preco_original, unit: "R$", separator: ",", delimiter: ".") %></s></small>
+                    <% end %>
+                    <span class="badge bg-warning text-dark d-block mt-1"><%= ideal.pharmacy_name %></span>
+                    <%= link_to "Ver produto", ideal.url, target: "_blank", rel: "noopener noreferrer", class: "btn btn-outline-primary btn-sm w-100 mt-2" %>
+                  </div>
+                </div>
+              <% else %>
+                <span class="text-muted">—</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot class="table-light fw-bold align-top">
+        <tr>
+          <td>Total</td>
+          <% pharmacy_slugs = @pharmacies.map(&:slug) %>
+          <% cheapest = @cart.cheapest_pharmacy_slug(pharmacy_slugs) %>
+          <% priciest = @cart.priciest_pharmacy_slug(pharmacy_slugs) %>
+          <% @pharmacies.each do |pharmacy| %>
+            <% total = @cart.pharmacy_total(pharmacy.slug) %>
+            <td>
+              <% if total %>
+                <% color = if pharmacy.slug == cheapest then "text-success"
+                             elsif pharmacy.slug == priciest then "text-danger"
+                             end %>
+                <span class="<%= color %>"><%= number_to_currency(total, unit: "R$", separator: ",", delimiter: ".") %></span>
+              <% else %>
+                <span class="text-muted fw-normal">—</span>
+              <% end %>
+              <% if pharmacy.checkout? && @cart_items.any? { |i| i.selection_for(pharmacy.slug)&.sku_id.present? } %>
+                <%= link_to checkout_cart_path(pharmacy_slug: pharmacy.slug),
+                      target: "_blank", rel: "noopener noreferrer",
+                      class: "btn btn-outline-success btn-sm w-100 mt-2" do %>
+                  <i class="bi bi-cart3"></i> Comprar tudo na <%= pharmacy.name %>
+                <% end %>
+              <% end %>
+            </td>
+          <% end %>
+          <td class="table-warning">
+            <% ideal_total = @cart.ideal_total %>
+            <% if ideal_total > 0 %>
+              <%= number_to_currency(ideal_total, unit: "R$", separator: ",", delimiter: ".") %>
+              <% count = @cart.ideal_pharmacies_count %>
+              <% if count > 1 %>
+                <small class="d-block text-muted fw-normal"><%= count %> farmácias</small>
+              <% end %>
+              <small class="d-block text-danger fw-normal mt-2">
+                <i class="bi bi-info-circle"></i> Para obter o melhor preço, adicione cada produto manualmente no site da respectiva farmácia.
+              </small>
+            <% else %>
+              <span class="text-muted fw-normal">—</span>
+            <% end %>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+<% end %>

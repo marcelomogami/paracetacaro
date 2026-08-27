@@ -1,0 +1,33 @@
+# BLOQUEADO: o Drogasil (RaiaDrogasil) usa Akamai Bot Manager, que retorna
+# "Access Denied" (403) tanto para HTTP puro (Faraday) quanto para Chrome
+# headless (Ferrum) — o bloqueio é na borda, antes de entregar conteúdo.
+# Furar isso exigiria evasão de bot-detection (TLS/JA3 spoofing, mascarar
+# navigator.webdriver etc.), o que contraria a decisão do projeto: "nada
+# além do que uma pessoa normal faria no site". Mantido como registro do
+# que foi testado; enabled: false → não aparece nas buscas.
+name: Drogasil
+slug: drogasil
+enabled: false
+mode: html
+
+search:
+  url: "https://www.drogasil.com.br/search?w={query}&search-type=direct"
+  needs_js: true
+
+selectors:
+  results: "[data-testid='product-card']"
+  nome: "[class*='productName']"
+  fabricante: "[class*='brandName']"
+  apresentacao: "[class*='description']"
+  preco:
+    selector: "[class*='sellingPrice']"
+    transform: strip_currency
+  preco_original:
+    selector: "[class*='listPrice']"
+    transform: strip_currency
+  url:
+    selector: "a"
+    attribute: href
+  imagem:
+    selector: "img"
+    attribute: src

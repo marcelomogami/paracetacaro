@@ -1,0 +1,21 @@
+name: Drogaria São Paulo
+slug: drogariasaopaulo
+enabled: true
+mode: api
+
+search:
+  url: "https://www.drogariasaopaulo.com.br/api/catalog_system/pub/products/search/{query}?_from=0&_to=19"
+
+fields:
+  results: ""
+  nome: "productName"
+  fabricante: "brand"
+  preco: "items[0].sellers[0].commertialOffer.Price"
+  preco_original: "items[0].sellers[0].commertialOffer.ListPrice"
+  url: "link"
+  imagem: "items[0].images[0].imageUrl"
+  sku_id: "items[0].itemId"
+  disponivel: "items[0].sellers[0].commertialOffer.IsAvailable"
+  vendedor_id: "items[0].sellers[0].sellerId"
+  vendedor_nome: "items[0].sellers[0].sellerName"
+  promocao: "items[0].sellers[0].commertialOffer.Teasers[0].<Name>k__BackingField"

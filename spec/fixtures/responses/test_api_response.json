@@ -1,0 +1,87 @@
+[
+  {
+    "productName": "Paracetamol 500mg 20 Comprimidos",
+    "brand": "Medley",
+    "link": "https://example.com/paracetamol-500mg/p",
+    "Teasers": [
+      { "Name": "LEVE3 PAGUE2" }
+    ],
+    "items": [
+      {
+        "imageUrl": "https://example.com/paracetamol.jpg",
+        "price": 4.99,
+        "listPrice": 6.99,
+        "sellers": [
+          {
+            "sellerId": "1",
+            "sellerName": "Test Pharmacy",
+            "commertialOffer": {
+              "Price": 4.99,
+              "ListPrice": 6.99,
+              "IsAvailable": true,
+              "AvailableQuantity": 99999,
+              "Teasers": [
+                { "<Name>k__BackingField": "LEVE3 PAGUE2" }
+              ],
+              "DiscountHighLight": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "productName": "Paracetamol 750mg 20 Comprimidos",
+    "brand": "EMS",
+    "link": "https://example.com/paracetamol-750mg/p",
+    "Teasers": [],
+    "items": [
+      {
+        "imageUrl": "https://example.com/paracetamol2.jpg",
+        "price": 7.89,
+        "listPrice": 7.89,
+        "sellers": [
+          {
+            "sellerId": "MKTPLACE123",
+            "sellerName": "Unicpharma",
+            "commertialOffer": {
+              "Price": 7.89,
+              "ListPrice": 7.89,
+              "IsAvailable": true,
+              "AvailableQuantity": 50,
+              "Teasers": [],
+              "DiscountHighLight": [
+                { "<Name>k__BackingField": "SUPEROFERTA" }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "productName": "Paracetamol 1g 20 Comprimidos",
+    "brand": "Genérico",
+    "link": "https://example.com/paracetamol-1g/p",
+    "Teasers": [],
+    "items": [
+      {
+        "imageUrl": "https://example.com/paracetamol3.jpg",
+        "price": 9.99,
+        "listPrice": 9.99,
+        "sellers": [
+          {
+            "commertialOffer": {
+              "Price": 9.99,
+              "ListPrice": 9.99,
+              "IsAvailable": false,
+              "AvailableQuantity": 0,
+              "Teasers": [],
+              "DiscountHighLight": []
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

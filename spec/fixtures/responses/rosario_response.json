@@ -1,0 +1,52 @@
+[
+  {
+    "productName": "Allegra 120mg 10 Comprimidos",
+    "brand": "Sanofi",
+    "link": "https://www.drogariarosario.com.br/allegra-120mg/p",
+    "items": [
+      {
+        "itemId": "437",
+        "images": [{ "imageUrl": "https://example.com/allegra.jpg" }],
+        "sellers": [
+          {
+            "commertialOffer": {
+              "Price": 59.09,
+              "ListPrice": 59.17,
+              "Teasers": [
+                {
+                  "<Name>k__BackingField": "38% OFF na 2ª Unidade",
+                  "<GeneralValues>k__BackingField": {},
+                  "<Conditions>k__BackingField": {
+                    "<MinimumQuantity>k__BackingField": 2,
+                    "<Parameters>k__BackingField": []
+                  },
+                  "<Effects>k__BackingField": { "<Parameters>k__BackingField": [] }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "productName": "Allegra Pediátrico 6mg/ml 60ml",
+    "brand": "Sanofi",
+    "link": "https://www.drogariarosario.com.br/allegra-pediatrico/p",
+    "items": [
+      {
+        "itemId": "2651",
+        "images": [{ "imageUrl": "https://example.com/allegra-ped.jpg" }],
+        "sellers": [
+          {
+            "commertialOffer": {
+              "Price": 36.79,
+              "ListPrice": 39.61,
+              "Teasers": []
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

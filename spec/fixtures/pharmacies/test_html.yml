@@ -1,0 +1,21 @@
+name: Test HTML
+slug: test_html
+enabled: true
+mode: html
+
+search:
+  url: "https://example.com/search?q={query}"
+  needs_js: true
+
+selectors:
+  results: ".product"
+  nome: ".name"
+  preco:
+    selector: ".price"
+    transform: strip_currency
+  url:
+    selector: "a"
+    attribute: href
+  imagem:
+    selector: "img"
+    attribute: src

@@ -1,0 +1,45 @@
+<% content_for :title, "Usuários — Paracetacaro" %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="mb-0">Usuários</h4>
+  <%= link_to "＋ Novo usuário", cadastro_path, class: "btn btn-primary btn-sm" %>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th class="text-center">Beta</th>
+        <th>Criado em</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name.presence || "—" %></td>
+          <td><%= user.email %></td>
+          <td class="text-center">
+            <% if user.beta_tester? %>
+              <span class="badge" style="background-color: #7c3aed;">Beta tester</span>
+            <% end %>
+          </td>
+          <td class="text-muted small"><%= user.created_at.strftime("%d/%m/%Y") %></td>
+          <td class="text-end">
+            <%= link_to edit_admin_user_path(user), class: "btn btn-outline-secondary btn-sm", title: "Editar" do %>
+              <i class="bi bi-pencil"></i>
+            <% end %>
+            <%= button_to admin_user_path(user), method: :delete,
+                data: { turbo_confirm: "Remover #{user.email}?" },
+                class: "btn btn-outline-danger btn-sm", title: "Remover",
+                form_class: "d-inline" do %>
+              <i class="bi bi-trash"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
